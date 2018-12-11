@@ -1,6 +1,6 @@
 # Flutter Property Finder App
 
-A new Flutter project from [YouTube Tutorial: Flutter Property Listing App (by Emmanuel Okiche)](https://www.youtube.com/watch?v=DLbD9XPnUQc) 
+A new Flutter project from [YouTube Tutorial: Flutter Property Listing App (by Emmanuel Okiche)](https://www.youtube.com/watch?v=DLbD9XPnUQc) Thank you for this great content!
 
 ## Getting Started
 
