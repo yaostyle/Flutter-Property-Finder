@@ -14,7 +14,7 @@ class PropertyScopedModel extends Model {
 
   Future<dynamic> _getData(String place) async {
     String uri =
-        "https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=buy&place_name=$place";
+        "https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=buy&has_photo=1&place_name=$place";
     var res = await http.get(Uri.encodeFull(uri));
     return json.decode(res.body);
   }

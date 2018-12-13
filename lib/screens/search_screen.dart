@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_property_finder/models/property_scoped_model.dart';
+import 'package:flutter_property_finder/ui_widgets/property_item.dart';
 import 'package:flutter_property_finder/ui_widgets/search.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -12,7 +13,9 @@ class SearchScreen extends StatelessWidget {
           return CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
-                title: SearchWidget(performSearch: model.getProperties,),
+                title: SearchWidget(
+                  performSearch: model.getProperties,
+                ),
               ),
               model.isLoading
                   ? SliverFillRemaining(
@@ -22,9 +25,18 @@ class SearchScreen extends StatelessWidget {
                     )
                   : SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(model.properties[index].title));
+                        return Column(
+                          children: <Widget>[
+                            PropertyItem(model.properties[index]),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Divider(
+                                height: 1,
+                                color: Colors.grey,
+                              ),
+                            )
+                          ],
+                        );
                       }, childCount: model.properties.length),
                     )
             ],
