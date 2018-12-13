@@ -12,7 +12,7 @@ class SearchScreen extends StatelessWidget {
           return CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
-                title: SearchWidget(),
+                title: SearchWidget(performSearch: model.getProperties,),
               ),
               model.isLoading
                   ? SliverFillRemaining(
