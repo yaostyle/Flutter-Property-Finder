@@ -9,12 +9,14 @@ class PropertyScopedModel extends Model {
   List<Property> _properties = [];
   bool _isLoading = false;
   String _statusText = "Start Search";
+  int _totalResults;
+
+
 
   List<Property> get properties => _properties;
-
   bool get isLoading => _isLoading;
-
   String get statusText => _statusText;
+  int get totalResults => _totalResults;
 
   int getPropertyCount() => _properties.length;
 
@@ -22,7 +24,19 @@ class PropertyScopedModel extends Model {
     String uri =
         "https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=buy&has_photo=1&place_name=$place";
     var res = await http.get(Uri.encodeFull(uri));
-    return json.decode(res.body);
+    var decodedJson = json.decode(res.body, reviver: (k, v){
+      if (k == "bathroom_number"){
+        if (v == "") return null;
+        return v;
+      }
+      if (k == "bedroom_number"){
+        if (v == "") return null;
+        return v;
+      }
+      return v;
+    });
+    
+    return decodedJson;
   }
 
   Future getProperties(String place) async {
@@ -40,6 +54,8 @@ class PropertyScopedModel extends Model {
     if (nestoria.response.listings.isEmpty) {
       _statusText = "Nothing found";
     }
+
+    _totalResults = nestoria.response.totalResults;
 
     _isLoading = false;
     notifyListeners();

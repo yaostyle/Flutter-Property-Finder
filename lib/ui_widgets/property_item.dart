@@ -55,12 +55,12 @@ class PropertyItem extends StatelessWidget {
                             style: Theme.of(context).textTheme.headline,
                           ),),
                           TextIcon(
-                            text: "2",
+                            text: "${property.bedroomNumber ?? "#"}",
                             icon: FontAwesomeIcons.bed,
                             isColumn: false,
                           ),
                           TextIcon(
-                            text: "1",
+                            text: "${property.bathroomNumber ?? "#"}",
                             icon: FontAwesomeIcons.shower,
                             isColumn: false,
                           ),

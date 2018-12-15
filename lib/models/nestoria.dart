@@ -47,13 +47,13 @@ abstract class Property implements Built<Property, PropertyBuilder> {
   @BuiltValueField(wireName: 'img_url')
   String get imgUrl;
 
-  // @nullable
-  // @BuiltValueField(wireName: 'bathroom_number')
-  // int get bathroomNumber;
+   @nullable
+   @BuiltValueField(wireName: 'bathroom_number')
+   int get bathroomNumber;
 
-  // @nullable
-  // @BuiltValueField(wireName: 'bedroom_number')
-  // int get bedroomNumber;
+   @nullable
+   @BuiltValueField(wireName: 'bedroom_number')
+   int get bedroomNumber;
 
   @BuiltValueField(wireName: 'car_spaces')
   int get carSpaces;
@@ -68,8 +68,8 @@ abstract class Property implements Built<Property, PropertyBuilder> {
   @nullable
   String get keywords;
 
-  // @memoized
-  // BuiltList<String> get keyWordList => BuiltList<String>(keywords.split(", "));
+//  @memoized
+//  BuiltList<String> get keyWordList => BuiltList<String>(keywords.split(", "));
 
   @nullable
   @BuiltValueField(wireName: 'lister_name')

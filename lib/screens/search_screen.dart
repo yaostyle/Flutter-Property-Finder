@@ -33,20 +33,37 @@ class SearchScreen extends StatelessWidget {
                       : SliverList(
                           delegate:
                               SliverChildBuilderDelegate((context, index) {
-                            return Column(
-                              children: <Widget>[
-                                PropertyItem(model.properties[index]),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
-                                  child: Divider(
-                                    height: 1,
-                                    color: Colors.grey,
-                                  ),
-                                )
-                              ],
-                            );
-                          }, childCount: model.getPropertyCount()),
+                            if (index == 0) {
+                              return Container(
+                                padding: const EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey[300]))),
+                                child: Text(
+                                  "${model.totalResults} results",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .body2
+                                      .copyWith(color: Colors.grey),
+                                ),
+                              );
+                            } else {
+                              return Column(
+                                children: <Widget>[
+                                  PropertyItem(model.properties[index - 1]),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
+                                    child: Divider(
+                                      height: 1,
+                                      color: Colors.grey,
+                                    ),
+                                  )
+                                ],
+                              );
+                            }
+                          }, childCount: model.getPropertyCount() + 1),
                         )
             ],
           );

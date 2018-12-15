@@ -153,6 +153,18 @@ class _$PropertySerializer implements StructuredSerializer<Property> {
       serializers.serialize(object.priceFormatted,
           specifiedType: const FullType(String)),
     ];
+    if (object.bathroomNumber != null) {
+      result
+        ..add('bathroom_number')
+        ..add(serializers.serialize(object.bathroomNumber,
+            specifiedType: const FullType(int)));
+    }
+    if (object.bedroomNumber != null) {
+      result
+        ..add('bedroom_number')
+        ..add(serializers.serialize(object.bedroomNumber,
+            specifiedType: const FullType(int)));
+    }
     if (object.propertyType != null) {
       result
         ..add('property_type')
@@ -219,6 +231,14 @@ class _$PropertySerializer implements StructuredSerializer<Property> {
         case 'img_url':
           result.imgUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'bathroom_number':
+          result.bathroomNumber = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'bedroom_number':
+          result.bedroomNumber = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'car_spaces':
           result.carSpaces = serializers.deserialize(value,
@@ -482,6 +502,10 @@ class _$Property extends Property {
   @override
   final String imgUrl;
   @override
+  final int bathroomNumber;
+  @override
+  final int bedroomNumber;
+  @override
   final int carSpaces;
   @override
   final String priceFormatted;
@@ -506,6 +530,8 @@ class _$Property extends Property {
       this.summary,
       this.thumbUrl,
       this.imgUrl,
+      this.bathroomNumber,
+      this.bedroomNumber,
       this.carSpaces,
       this.priceFormatted,
       this.propertyType,
@@ -550,6 +576,8 @@ class _$Property extends Property {
         summary == other.summary &&
         thumbUrl == other.thumbUrl &&
         imgUrl == other.imgUrl &&
+        bathroomNumber == other.bathroomNumber &&
+        bedroomNumber == other.bedroomNumber &&
         carSpaces == other.carSpaces &&
         priceFormatted == other.priceFormatted &&
         propertyType == other.propertyType &&
@@ -572,10 +600,14 @@ class _$Property extends Property {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, title.hashCode),
-                                                summary.hashCode),
-                                            thumbUrl.hashCode),
-                                        imgUrl.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc($jc(0, title.hashCode),
+                                                        summary.hashCode),
+                                                    thumbUrl.hashCode),
+                                                imgUrl.hashCode),
+                                            bathroomNumber.hashCode),
+                                        bedroomNumber.hashCode),
                                     carSpaces.hashCode),
                                 priceFormatted.hashCode),
                             propertyType.hashCode),
@@ -593,6 +625,8 @@ class _$Property extends Property {
           ..add('summary', summary)
           ..add('thumbUrl', thumbUrl)
           ..add('imgUrl', imgUrl)
+          ..add('bathroomNumber', bathroomNumber)
+          ..add('bedroomNumber', bedroomNumber)
           ..add('carSpaces', carSpaces)
           ..add('priceFormatted', priceFormatted)
           ..add('propertyType', propertyType)
@@ -623,6 +657,15 @@ class PropertyBuilder implements Builder<Property, PropertyBuilder> {
   String _imgUrl;
   String get imgUrl => _$this._imgUrl;
   set imgUrl(String imgUrl) => _$this._imgUrl = imgUrl;
+
+  int _bathroomNumber;
+  int get bathroomNumber => _$this._bathroomNumber;
+  set bathroomNumber(int bathroomNumber) =>
+      _$this._bathroomNumber = bathroomNumber;
+
+  int _bedroomNumber;
+  int get bedroomNumber => _$this._bedroomNumber;
+  set bedroomNumber(int bedroomNumber) => _$this._bedroomNumber = bedroomNumber;
 
   int _carSpaces;
   int get carSpaces => _$this._carSpaces;
@@ -666,6 +709,8 @@ class PropertyBuilder implements Builder<Property, PropertyBuilder> {
       _summary = _$v.summary;
       _thumbUrl = _$v.thumbUrl;
       _imgUrl = _$v.imgUrl;
+      _bathroomNumber = _$v.bathroomNumber;
+      _bedroomNumber = _$v.bedroomNumber;
       _carSpaces = _$v.carSpaces;
       _priceFormatted = _$v.priceFormatted;
       _propertyType = _$v.propertyType;
@@ -700,6 +745,8 @@ class PropertyBuilder implements Builder<Property, PropertyBuilder> {
             summary: summary,
             thumbUrl: thumbUrl,
             imgUrl: imgUrl,
+            bathroomNumber: bathroomNumber,
+            bedroomNumber: bedroomNumber,
             carSpaces: carSpaces,
             priceFormatted: priceFormatted,
             propertyType: propertyType,
