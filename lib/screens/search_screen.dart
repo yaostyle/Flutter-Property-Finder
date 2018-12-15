@@ -23,22 +23,31 @@ class SearchScreen extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       ),
                     )
-                  : SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        return Column(
-                          children: <Widget>[
-                            PropertyItem(model.properties[index]),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Divider(
-                                height: 1,
-                                color: Colors.grey,
-                              ),
-                            )
-                          ],
-                        );
-                      }, childCount: model.properties.length),
-                    )
+                  : model.getPropertyCount() < 1
+                      ? SliverFillRemaining(
+                          child: Center(
+                            child: Text(model.statusText,
+                                style: Theme.of(context).textTheme.headline),
+                          ),
+                        )
+                      : SliverList(
+                          delegate:
+                              SliverChildBuilderDelegate((context, index) {
+                            return Column(
+                              children: <Widget>[
+                                PropertyItem(model.properties[index]),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Divider(
+                                    height: 1,
+                                    color: Colors.grey,
+                                  ),
+                                )
+                              ],
+                            );
+                          }, childCount: model.getPropertyCount()),
+                        )
             ],
           );
         },

@@ -7,10 +7,16 @@ import 'package:http/http.dart' as http;
 
 class PropertyScopedModel extends Model {
   List<Property> _properties = [];
+  bool _isLoading = false;
+  String _statusText = "Start Search";
+
   List<Property> get properties => _properties;
 
-  bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  String get statusText => _statusText;
+
+  int getPropertyCount() => _properties.length;
 
   Future<dynamic> _getData(String place) async {
     String uri =
@@ -30,6 +36,10 @@ class PropertyScopedModel extends Model {
 
     _properties =
         nestoria.response.listings.map((property) => property).toList();
+
+    if (nestoria.response.listings.isEmpty) {
+      _statusText = "Nothing found";
+    }
 
     _isLoading = false;
     notifyListeners();
