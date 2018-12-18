@@ -16,6 +16,8 @@ class SearchScreen extends StatelessWidget {
                 title: SearchWidget(
                   performSearch: model.getProperties,
                 ),
+                floating: true,
+                snap: true,
               ),
               model.isLoading
                   ? SliverFillRemaining(
@@ -33,7 +35,15 @@ class SearchScreen extends StatelessWidget {
                       : SliverList(
                           delegate:
                               SliverChildBuilderDelegate((context, index) {
-                            if (index == 0) {
+                                print(index);
+                            if (index == model.getPropertyCount()) {
+                              if (model.hasMorePages) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                  child: Center(child: CircularProgressIndicator()),
+                                );
+                              }
+                            } else if (index == 0) {
                               return Container(
                                 padding: const EdgeInsets.all(16.0),
                                 decoration: BoxDecoration(

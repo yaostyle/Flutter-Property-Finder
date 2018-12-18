@@ -10,32 +10,44 @@ class PropertyScopedModel extends Model {
   bool _isLoading = false;
   String _statusText = "Start Search";
   int _totalResults;
-
-
+  int _totalPages;
+  bool _hasMorePages = true;
 
   List<Property> get properties => _properties;
+
   bool get isLoading => _isLoading;
+
   String get statusText => _statusText;
+
   int get totalResults => _totalResults;
+
+  int get totalPages => _totalPages;
+
+  bool get hasMorePages => _hasMorePages;
 
   int getPropertyCount() => _properties.length;
 
   Future<dynamic> _getData(String place) async {
-    String uri =
-        "https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=buy&has_photo=1&place_name=$place";
-    var res = await http.get(Uri.encodeFull(uri));
-    var decodedJson = json.decode(res.body, reviver: (k, v){
-      if (k == "bathroom_number"){
+    var uri = new Uri.https("api.nestoria.co.uk", "/api", {
+      "encoding": "json",
+      "action": "search_listings",
+      "has_photo": "1",
+      "number_of_results": "10",
+      "place_name": place.isNotEmpty ? place : "brighton"
+    });
+    var res = await http.get(uri);
+    var decodedJson = json.decode(res.body, reviver: (k, v) {
+      if (k == "bathroom_number") {
         if (v == "") return null;
         return v;
       }
-      if (k == "bedroom_number"){
+      if (k == "bedroom_number") {
         if (v == "") return null;
         return v;
       }
       return v;
     });
-    
+
     return decodedJson;
   }
 
@@ -56,6 +68,11 @@ class PropertyScopedModel extends Model {
     }
 
     _totalResults = nestoria.response.totalResults;
+    _totalPages = nestoria.response.totalPages;
+
+    if (nestoria.response.page == totalPages) {
+      _hasMorePages = false;
+    }
 
     _isLoading = false;
     notifyListeners();
