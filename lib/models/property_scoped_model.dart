@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_property_finder/models/nestoria.dart';
 import 'package:flutter_property_finder/models/serializers.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -12,6 +13,8 @@ class PropertyScopedModel extends Model {
   int _totalResults;
   int _totalPages;
   bool _hasMorePages = true;
+  String _placeName;
+  bool _isLoadingMore = false;
 
   List<Property> get properties => _properties;
 
@@ -25,13 +28,18 @@ class PropertyScopedModel extends Model {
 
   bool get hasMorePages => _hasMorePages;
 
+  String get placeName => _placeName;
+
+  bool get isLoadingMore => _isLoadingMore;
+
   int getPropertyCount() => _properties.length;
 
-  Future<dynamic> _getData(String place) async {
+  Future<dynamic> _getData(String place, [int page = 1]) async {
     var uri = new Uri.https("api.nestoria.co.uk", "/api", {
       "encoding": "json",
       "action": "search_listings",
       "has_photo": "1",
+      "page": page.toString(),
       "number_of_results": "10",
       "place_name": place.isNotEmpty ? place : "brighton"
     });
@@ -51,17 +59,26 @@ class PropertyScopedModel extends Model {
     return decodedJson;
   }
 
-  Future getProperties(String place) async {
-    _isLoading = true;
+  Future getProperties(String place, [int page = 1]) async {
+    if (page == 1) {
+      _isLoading = true;
+      _properties.clear();
+    } else {
+      _isLoadingMore = true;
+    }
+
+    _placeName = place;
+
     notifyListeners();
 
-    var responseData = await _getData(place);
+    var responseData = await _getData(place, page);
 
     Nestoria nestoria =
         serializers.deserializeWith(Nestoria.serializer, responseData);
 
-    _properties =
-        nestoria.response.listings.map((property) => property).toList();
+    nestoria.response.listings.forEach((property) {
+      _properties.add(property);
+    });
 
     if (nestoria.response.listings.isEmpty) {
       _statusText = "Nothing found";
@@ -74,7 +91,16 @@ class PropertyScopedModel extends Model {
       _hasMorePages = false;
     }
 
-    _isLoading = false;
+    print(nestoria.response.page);
+
+    if (page == 1) {
+      _isLoading = false;
+    } else {
+      _isLoadingMore = false;
+    }
     notifyListeners();
   }
+
+  static PropertyScopedModel of(BuildContext context) =>
+      ScopedModel.of<PropertyScopedModel>(context);
 }

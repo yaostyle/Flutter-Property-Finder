@@ -4,13 +4,48 @@ import 'package:flutter_property_finder/ui_widgets/property_item.dart';
 import 'package:flutter_property_finder/ui_widgets/search.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
+  @override
+  SearchScreenState createState() {
+    return new SearchScreenState();
+  }
+}
+
+class SearchScreenState extends State<SearchScreen> {
+  ScrollController controller;
+  int page = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = new ScrollController()..addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  void _scrollListener() {
+    var props = PropertyScopedModel.of(context);
+    if(controller.position.pixels == controller.position.maxScrollExtent) {
+      print("Reached end");
+      if(props.hasMorePages) {
+        page++;
+        print("UI page: $page");
+        props.getProperties(props.placeName, page);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ScopedModelDescendant<PropertyScopedModel>(
         builder: (context, child, model) {
           return CustomScrollView(
+            controller: controller,
             slivers: <Widget>[
               SliverAppBar(
                 title: SearchWidget(
