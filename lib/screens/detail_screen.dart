@@ -13,7 +13,7 @@ class DetailScreen extends StatelessWidget {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-//      throw 'Could not launch $url';
+      //      throw 'Could not launch $url';
       Scaffold.of(context)
           .showSnackBar(SnackBar(content: Text("Can't load: $url")));
     }
