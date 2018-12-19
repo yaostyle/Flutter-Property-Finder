@@ -68,8 +68,8 @@ abstract class Property implements Built<Property, PropertyBuilder> {
   @nullable
   String get keywords;
 
-//  @memoized
-//  BuiltList<String> get keyWordList => BuiltList<String>(keywords.split(", "));
+  @memoized
+  BuiltList<String> get keyWordList => BuiltList<String>(keywords.split(", "));
 
   @nullable
   @BuiltValueField(wireName: 'lister_name')
