@@ -146,12 +146,6 @@ class _$PropertySerializer implements StructuredSerializer<Property> {
       'img_url',
       serializers.serialize(object.imgUrl,
           specifiedType: const FullType(String)),
-      'car_spaces',
-      serializers.serialize(object.carSpaces,
-          specifiedType: const FullType(int)),
-      'price_formatted',
-      serializers.serialize(object.priceFormatted,
-          specifiedType: const FullType(String)),
     ];
     if (object.bathroomNumber != null) {
       result
@@ -164,6 +158,18 @@ class _$PropertySerializer implements StructuredSerializer<Property> {
         ..add('bedroom_number')
         ..add(serializers.serialize(object.bedroomNumber,
             specifiedType: const FullType(int)));
+    }
+    if (object.carSpaces != null) {
+      result
+        ..add('car_spaces')
+        ..add(serializers.serialize(object.carSpaces,
+            specifiedType: const FullType(int)));
+    }
+    if (object.priceFormatted != null) {
+      result
+        ..add('price_formatted')
+        ..add(serializers.serialize(object.priceFormatted,
+            specifiedType: const FullType(String)));
     }
     if (object.propertyType != null) {
       result
@@ -553,12 +559,6 @@ class _$Property extends Property {
     }
     if (imgUrl == null) {
       throw new BuiltValueNullFieldError('Property', 'imgUrl');
-    }
-    if (carSpaces == null) {
-      throw new BuiltValueNullFieldError('Property', 'carSpaces');
-    }
-    if (priceFormatted == null) {
-      throw new BuiltValueNullFieldError('Property', 'priceFormatted');
     }
   }
 

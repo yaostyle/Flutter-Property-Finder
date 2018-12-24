@@ -51,7 +51,7 @@ class PropertyItem extends StatelessWidget {
                         children: <Widget>[
                           Expanded(child:
                           Text(
-                            property.priceFormatted,
+                            property.priceFormatted != null ? property.priceFormatted : "",
                             style: Theme.of(context).textTheme.headline,
                           ),),
                           TextIcon(

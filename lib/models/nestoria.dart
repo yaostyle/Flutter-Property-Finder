@@ -10,6 +10,7 @@ abstract class Nestoria implements Built<Nestoria, NestoriaBuilder> {
   Response get response;
 
   Nestoria._();
+
   factory Nestoria([updates(NestoriaBuilder b)]) = _$Nestoria;
 }
 
@@ -31,6 +32,7 @@ abstract class Response implements Built<Response, ResponseBuilder> {
   int get totalPages;
 
   Response._();
+
   factory Response([updates(ResponseBuilder b)]) = _$Response;
 }
 
@@ -47,17 +49,19 @@ abstract class Property implements Built<Property, PropertyBuilder> {
   @BuiltValueField(wireName: 'img_url')
   String get imgUrl;
 
-   @nullable
-   @BuiltValueField(wireName: 'bathroom_number')
-   int get bathroomNumber;
+  @nullable
+  @BuiltValueField(wireName: 'bathroom_number')
+  int get bathroomNumber;
 
-   @nullable
-   @BuiltValueField(wireName: 'bedroom_number')
-   int get bedroomNumber;
+  @nullable
+  @BuiltValueField(wireName: 'bedroom_number')
+  int get bedroomNumber;
 
+  @nullable
   @BuiltValueField(wireName: 'car_spaces')
   int get carSpaces;
 
+  @nullable
   @BuiltValueField(wireName: 'price_formatted')
   String get priceFormatted;
 
@@ -88,5 +92,6 @@ abstract class Property implements Built<Property, PropertyBuilder> {
   int get updatedDays;
 
   Property._();
+
   factory Property([updates(PropertyBuilder b)]) = _$Property;
 }
